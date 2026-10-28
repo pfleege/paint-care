@@ -1,7 +1,8 @@
 // src/data/site.ts
 
 export const site = {
-  name: "PaintCare Daycare Center",
+  name: "PaintCare",
+  business: "Daycare Center",
   tagline: "A private kindergarten where feelings come first.",
   description:
     "PaintCare is a small, private kindergarten (fictional showcase) built around play, curiosity and every child's well-being.",
