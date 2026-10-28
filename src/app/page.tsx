@@ -32,6 +32,12 @@ export default async function Home() {
           </ul>
         </div>
         <div className="flex flex-wrap gap-8 p-10">
+          <div className="relative animate-morph size-35 bg-sky">
+            <PaintBlob
+              seed={4}
+              className="absolute top-0 right-0 animate-drift w-40 text-grape"
+            />
+          </div>
           <PaintBlob seed={10} className="w-35 text-tomato" />
           <PaintBlob seed={5} className="w-20 text-mint" />
           <PaintBlob seed={2} className="w-50 text-sky" />
