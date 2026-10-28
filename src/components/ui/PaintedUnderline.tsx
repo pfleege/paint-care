@@ -1,6 +1,9 @@
 // src/components/ui/PaintedUnderline.tsx
 
+"use client";
+
 import { cnj } from "@/utils/class-name-joiner";
+import { motion } from "motion/react";
 
 export default function PaintedUnderline({
   className,
@@ -14,13 +17,17 @@ export default function PaintedUnderline({
       aria-hidden="true"
       className={cnj("h-3 w-full dark:text-sun text-tomato", className)}
     >
-      <path
+      <motion.path
         d="M4 12 C 60 2, 120 18, 180 8 S 270 6, 296 11"
         fill="none"
         stroke="currentColor"
         strokeWidth={6}
         strokeLinecap="round"
         vectorEffect="non-scaling-stroke"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
       />
     </svg>
   );
