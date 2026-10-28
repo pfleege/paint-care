@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { cnj } from "@/utils/class-name-joiner";
+import PaintedUnderline from "./PaintedUnderline";
 
 type Props = {
   title: string;
@@ -30,9 +31,10 @@ export default function SectionHeading({
         height={450}
         priority
       />
-      <h2 className="text-3xl content-center font-medium md:text-4xl">
-        {title}
-      </h2>
+      <div className="flex flex-col justify-end pb-6">
+        <h2 className="text-3xl z-1 font-medium md:text-4xl">{title}</h2>
+        <PaintedUnderline />
+      </div>
     </div>
   );
 }
