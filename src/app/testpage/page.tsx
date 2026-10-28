@@ -9,6 +9,7 @@ import { site } from "@/data/site";
 import PaintBlob from "@/components/ui/PaintBlob";
 import Button from "@/components/ui/Button";
 import CdnImage from "@/components/ui/CdnImage";
+import Footer from "@/components/ui/layout/Footer";
 
 export default async function TestPage() {
   const groups = await getDaycareGroups();
@@ -61,6 +62,7 @@ export default async function TestPage() {
           Click me
         </Button>
       </main>
+      <Footer />
     </div>
   );
 }

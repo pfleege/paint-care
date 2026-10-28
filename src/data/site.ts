@@ -8,7 +8,7 @@ export const site = {
     "PaintCare is a small, private kindergarten (fictional showcase) built around play, curiosity and every child's well-being.",
   address: ["Värikatu 5", "00100 Helsinki"],
   phone: "+358 40 123 4567",
-  email: "hello@paintbox-kindergarten.example",
+  email: "hello@paintcare-daycare.example",
   hours: "Mon–Fri, 7:30–16:30",
   nav: [
     { href: "/", label: "Home" },
