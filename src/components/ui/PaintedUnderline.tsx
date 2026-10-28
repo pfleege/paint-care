@@ -15,7 +15,7 @@ export default function PaintedUnderline({
       viewBox="0 0 300 20"
       preserveAspectRatio="none"
       aria-hidden="true"
-      className={cnj("h-3 w-full dark:text-sun text-tomato", className)}
+      className={cnj("h-3 w-full", className)}
     >
       <motion.path
         d="M4 12 C 60 2, 120 18, 180 8 S 270 6, 296 11"

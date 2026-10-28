@@ -1,19 +1,24 @@
 // src/components/ui/SectionHeading.tsx
 
 import Image from "next/image";
+// import type { ReactNode } from "react";
 import { cnj } from "@/utils/class-name-joiner";
 import PaintedUnderline from "./PaintedUnderline";
 
 type Props = {
   title: string;
+  //   children?: ReactNode; // For future use
   align?: "left" | "center";
   className?: string;
+  underlineClassName?: string;
 };
 
 export default function SectionHeading({
   title,
+  //   children,
   align = "left",
   className,
+  underlineClassName,
 }: Props) {
   return (
     <div
@@ -32,8 +37,15 @@ export default function SectionHeading({
         priority
       />
       <div className="flex flex-col justify-end pb-6">
-        <h2 className="text-3xl z-1 font-medium md:text-4xl">{title}</h2>
-        <PaintedUnderline />
+        <h2 className="text-3xl font-medium md:text-4xl">{title}</h2>
+        <PaintedUnderline
+          className={cnj(
+            "mt-2",
+            align === "center" && "mx-auto",
+            underlineClassName,
+          )}
+        />
+        {/* {children && <p className="mt-5 max-w-prose text-lg text-ink/80">{children}</p>} */}
       </div>
     </div>
   );
