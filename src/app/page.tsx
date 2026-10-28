@@ -4,6 +4,7 @@
 import { getDaycareGroups } from "@/db/queries/daycare-groups";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { site } from "@/data/site";
+import PaintBlob from "@/components/ui/PaintBlob";
 
 export default async function Home() {
   const groups = await getDaycareGroups();
@@ -29,6 +30,11 @@ export default async function Home() {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="flex flex-wrap gap-8 p-10">
+          <PaintBlob seed={10} className="w-35 text-tomato" />
+          <PaintBlob seed={5} className="w-20 text-mint" />
+          <PaintBlob seed={2} className="w-50 text-sky" />
         </div>
       </main>
     </div>

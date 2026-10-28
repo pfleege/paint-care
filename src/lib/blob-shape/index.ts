@@ -12,7 +12,7 @@ function randomNumberGenerator(seed: number) {
 }
 
 // Number of points determines how lumpy the outline will be - lower number = smoother shape
-export function blobShape(seed: number, points = 8): string {
+export function blobShape(seed: number, points = 45): string {
   const rand = randomNumberGenerator(seed);
 
   const pts = Array.from({ length: points }, (_, i) => {
@@ -20,7 +20,7 @@ export function blobShape(seed: number, points = 8): string {
     const angle = (i / points) * Math.PI * 2;
     // The point distance from center = gives the wobbliness (31 - 50)
     // Box is 100x100 -> Max rad = 50. Min is 62% of that.
-    const radius = 50 * (0.62 + rand() * 0.38);
+    const radius = 50 * (0.6 + rand() * 0.38);
     // Converting angle/radious to X and Y coordinates
     return [
       50 + Math.cos(angle) * radius,
