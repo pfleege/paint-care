@@ -37,7 +37,7 @@ export default async function TestPage() {
         </div> */}
         <div className="relative h-64 w-64 overflow-hidden rounded-full">
           <CdnImage
-            path="2025/10/21/18/31/pink-monster-9908120_1280.png"
+            path="2025/10/21/18/31/pink-monster-9908120_12800.png"
             alt="Cute monster"
             sizes="16rem"
           />
