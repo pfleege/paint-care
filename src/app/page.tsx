@@ -43,8 +43,12 @@ export default async function Home() {
           <PaintBlob seed={5} className="w-20 text-mint" />
           <PaintBlob seed={2} className="w-50 text-sky" />
         </div>
-        <Button href="/contact">Book a visit</Button>
-        <Button>Click me</Button>
+        <Button size="sm" href="/contact">
+          Book a visit
+        </Button>
+        <Button tone="chalk" size="md">
+          Click me
+        </Button>
       </main>
     </div>
   );

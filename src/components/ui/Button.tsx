@@ -4,9 +4,33 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { cnj } from "@/utils/class-name-joiner";
 
-type ButtonProps = { children: ReactNode; href?: string; className?: string };
+type ButtonProps = {
+  children: ReactNode;
+  href?: string;
+  type?: "button" | "submit";
+  disabled?: boolean;
+  size: "sm" | "md";
+  tone?: "ink" | "chalk";
+  className?: string;
+  onClick?: () => void;
+};
 
-export default function Button({ children, href, className }: ButtonProps) {
+const tones = {
+  ink: "bg-ink text-chalk hover:text-ink focus-visible:text-ink",
+  chalk: "bg-chalk text-ink border-2 border-ink dark:border-sky",
+};
+const sizes = { sm: "px-5 py-2.5 text-base", md: "px-8 py-4 text-lg" };
+
+export default function Button({
+  children,
+  href,
+  type = "button",
+  disabled,
+  size = "md",
+  tone = "ink",
+  className,
+  onClick,
+}: ButtonProps) {
   //   const classes = cnj(
   //     "inline-flex rounded-full bg-ink px-8 py-4 font-display text-lg text-chalk",
   //     className,
@@ -14,7 +38,10 @@ export default function Button({ children, href, className }: ButtonProps) {
 
   const classes = cnj(
     "group relative inline-flex items-center justify-center overflow-hidden rounded-full font-display font-medium",
-    "bg-ink px-8 py-4 text-lg text-chalk transition-colors duration-500 hover:text-ink hover:cursor-pointer",
+    // "bg-ink px-8 py-4 text-lg text-chalk transition-colors duration-500 hover:text-ink hover:cursor-pointer",
+    "transition-colors duration-1000 disabled:opacity-60 hover:cursor-pointer",
+    tones[tone],
+    sizes[size],
     className,
   );
   const inner = (
@@ -31,7 +58,12 @@ export default function Button({ children, href, className }: ButtonProps) {
       {inner}
     </Link>
   ) : (
-    <button type="button" className={classes}>
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+      className={classes}
+    >
       {inner}
     </button>
   );
