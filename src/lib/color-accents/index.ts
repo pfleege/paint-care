@@ -25,6 +25,6 @@ export const colorAccentHex: Record<ColorAccent, string> = {
   sun: "#FFFFC2",
   mint: "#C2FFC2",
   sky: "#5FE2FF",
-  grape: "#91FF5F",
+  grape: "#CC02F9",
   bubblegum: "#FF7EE1",
 };
