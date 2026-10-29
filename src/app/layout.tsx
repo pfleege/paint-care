@@ -5,6 +5,8 @@ import "@fontsource/gaegu";
 import "@fontsource/gloria-hallelujah";
 import "./globals.css";
 import { site } from "@/data/site";
+import Header from "@/components/ui/layout/Header";
+import Footer from "@/components/ui/layout/Footer";
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +27,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

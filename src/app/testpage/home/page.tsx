@@ -6,15 +6,12 @@ import { site } from "@/data/site";
 import PaintBlob from "@/components/ui/PaintBlob";
 import Button from "@/components/ui/Button";
 import CdnImage from "@/components/ui/CdnImage";
-import Header from "@/components/ui/layout/Header";
-import Footer from "@/components/ui/layout/Footer";
 
 export default async function TestHomePage() {
   const groups = await getDaycareGroups();
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Header />
       <main className="flex flex-1 w-full max-w-4xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <SectionHeading
           title={site.name}
@@ -52,7 +49,6 @@ export default async function TestHomePage() {
           Click me
         </Button>
       </main>
-      <Footer />
     </div>
   );
 }

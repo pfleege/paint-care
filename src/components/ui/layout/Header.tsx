@@ -89,7 +89,7 @@ export default function Header() {
                         aria-current={
                           pathname === item.href ? "page" : undefined
                         }
-                        className="block rounded-full px-5 py-3 font-display z-20 text-xl aria-[current=page]:bg-mint"
+                        className="block rounded-full px-5 py-3 font-display text-ink z-20 text-xl aria-[current=page]:bg-mint"
                       >
                         {item.label}
                       </Link>
