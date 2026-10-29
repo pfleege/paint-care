@@ -7,7 +7,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/data/site";
 import Button from "@/components/ui/Button";
-import { cnj } from "@/utils/class-name-joiner";
+// import { cnj } from "@/utils/class-name-joiner";
+import { motion } from "motion/react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -32,7 +33,7 @@ export default function Header() {
                 const active = pathname === item.href;
                 return (
                   <li key={item.href}>
-                    <Link
+                    {/* <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cnj(
@@ -40,6 +41,24 @@ export default function Header() {
                         active && "bg-sun shadow",
                       )}
                     >
+                      {item.label}
+                    </Link> */}
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className="relative block rounded-full px-5 py-2 font-display text-lg"
+                    >
+                      {active && (
+                        <motion.span
+                          layoutId="nav-blob"
+                          className="absolute inset-0 -z-10 rounded-full bg-sun shadow"
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 30,
+                          }}
+                        />
+                      )}
                       {item.label}
                     </Link>
                   </li>

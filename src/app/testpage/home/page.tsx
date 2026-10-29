@@ -1,8 +1,5 @@
-// src/app/testpage/page.tsx
+// src/app/testpage/home/page.tsx
 
-// src/app/page.tsx
-
-// import Image from "next/image";
 import { getDaycareGroups } from "@/db/queries/daycare-groups";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { site } from "@/data/site";
@@ -12,36 +9,26 @@ import CdnImage from "@/components/ui/CdnImage";
 import Header from "@/components/ui/layout/Header";
 import Footer from "@/components/ui/layout/Footer";
 
-export default async function TestPage() {
+export default async function TestHomePage() {
   const groups = await getDaycareGroups();
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <Header />
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+      <main className="flex flex-1 w-full max-w-4xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <SectionHeading
-          title={site.business}
+          title={site.name}
           className="dark:text-bubblegum text-grape"
           underlineClassName="dark:text-sun text-tomato"
         />
-
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Where every child paints their own day.
+          <p className="max-w-lg text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+            A daycare center where every child paints their own day.
           </p>
         </div>
-        {/* <div className="py-10">
-          <ul className="mt-6 dark:text-bubblegum text-grape">
-            {groups.map((group) => (
-              <li key={group.id}>
-                {group.name} ({group.ages})
-              </li>
-            ))}
-          </ul>
-        </div> */}
         <div className="relative h-64 w-64 overflow-hidden rounded-full">
           <CdnImage
-            path="2025/10/21/18/31/pink-monster-9908120_12800.png"
+            path="2024/01/14/09/58/ai-generated-8507502_1280.jpg"
             alt="Cute monster"
             sizes="16rem"
           />

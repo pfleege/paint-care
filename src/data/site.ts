@@ -11,8 +11,11 @@ export const site = {
   email: "hello@paintcare-daycare.example",
   hours: "Mon–Fri, 7:30–16:30",
   nav: [
-    { href: "/", label: "Home" },
-    { href: "/programs", label: "Programs" },
-    { href: "/contact", label: "Contact" },
+    { href: "/testpage/home", label: "Home" },
+    { href: "/testpage/programs", label: "Programs" },
+    { href: "testpage/contact", label: "Contact" },
+    // { href: "/", label: "Home" },
+    // { href: "/programs", label: "Programs" },
+    // { href: "/contact", label: "Contact" },
   ],
 } as const;
