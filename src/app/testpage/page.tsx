@@ -21,6 +21,7 @@ export default async function TestPage() {
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <SectionHeading
           title={site.business}
+          className="dark:text-bubblegum text-grape"
           underlineClassName="dark:text-sun text-tomato"
         />
 
