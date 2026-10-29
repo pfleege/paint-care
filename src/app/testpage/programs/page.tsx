@@ -3,8 +3,8 @@
 import { getDaycareGroups } from "@/db/queries/daycare-groups";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CdnImage from "@/components/ui/CdnImage";
-import Header from "@/components/ui/layout/Header";
-import Footer from "@/components/ui/layout/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export default async function TestProgramPage() {
   const groups = await getDaycareGroups();

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/data/site";
-import PaintBlob from "../PaintBlob";
+import PaintBlob from "../ui/PaintBlob";
 
 export default function Footer() {
   return (

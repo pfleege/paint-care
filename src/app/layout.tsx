@@ -5,8 +5,8 @@ import "@fontsource/gaegu";
 import "@fontsource/gloria-hallelujah";
 import "./globals.css";
 import { site } from "@/data/site";
-import Header from "@/components/ui/layout/Header";
-import Footer from "@/components/ui/layout/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: {

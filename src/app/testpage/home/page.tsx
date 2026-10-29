@@ -6,9 +6,12 @@ import { site } from "@/data/site";
 import PaintBlob from "@/components/ui/PaintBlob";
 import Button from "@/components/ui/Button";
 import CdnImage from "@/components/ui/CdnImage";
+import { getBusinessValues } from "@/db/queries/business-values";
+import BusinessValuesSection from "@/components/sections/BusinessValuesSection";
 
 export default async function TestHomePage() {
   const groups = await getDaycareGroups();
+  const values = await getBusinessValues();
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -18,6 +21,10 @@ export default async function TestHomePage() {
           className="dark:text-bubblegum text-grape"
           underlineClassName="dark:text-sun text-tomato"
         />
+        <div className="pt-32">
+          <BusinessValuesSection values={values} />
+        </div>
+
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <p className="max-w-lg text-lg leading-8 text-zinc-600 dark:text-zinc-400">
             A daycare center where every child paints their own day.
