@@ -1,10 +1,12 @@
 // src/components/sections/BusinessValuesSection.tsx
 
-import { BusinessValue } from "@/types/business-values";
+import type { BusinessValue } from "@/types/business-values";
 import { colorAccentText } from "@/lib/color-accents";
 import { cnj } from "@/utils/class-name-joiner";
 import PaintBlob from "../ui/PaintBlob";
 import SectionHeading from "@/components/ui/SectionHeading";
+
+const offsets = ["md:translate-y-0", "md:translate-y-24", "md:translate-y-8"];
 
 export default function BusinessValuesSection({
   values,
@@ -20,11 +22,17 @@ export default function BusinessValuesSection({
 
       <ul className="mt-16 grid gap-6 md:grid-cols-3">
         {values.map((value, i) => (
-          <li key={value.id} className="relative isolate">
+          <li
+            key={value.id}
+            className={cnj(
+              "group relative isolate",
+              offsets[i % offsets.length],
+            )}
+          >
             <PaintBlob
               seed={i * 9 + 2}
               className={cnj(
-                "absolute inset-0 -z-10 h-full w-full",
+                "absolute inset-0 -z-10 h-full w-full transition-transform duration-700 ease-out group-hover:rotate-6 group-hover:scale-105",
                 colorAccentText[value.colorAccent],
               )}
               preserveAspectRatio="none"
