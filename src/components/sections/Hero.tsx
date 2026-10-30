@@ -1,8 +1,10 @@
 // src/components/sections/Hero.tsx
 
+"use client";
+
 import Button from "../ui/Button";
 import CdnImage from "@/components/ui/CdnImage";
-import { PLACEHOLDER } from "@/lib/images";
+import { motion } from "motion/react";
 import type { CdnImageData } from "@/types/images";
 
 const HEADLINE = "Where every child paints their own day.";
@@ -21,17 +23,48 @@ export default function Hero({
     alt: "Smiling children playing with colourful paint",
   },
 }: Props) {
+  const words = headline.split(" ");
   return (
     <section className="relative isolate overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
-        <div>
-          <h1 className="text-5xl font-medium sm:text-6xl lg:text-7xl">
-            {headline}
-          </h1>
-          <p className="mt-7 max-w-lg text-lg text-ink/85 md:text-xl">
-            {intro}
-          </p>
-          <div className="mt-9 flex flex-wrap gap-4">
+      <div className="mx-auto grid max-w-6xl items-top gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
+        <h1 className="text-5xl font-medium lg:text-6xl">
+          {words.map((word, i) => (
+            <span
+              key={i}
+              className="inline-block overflow-hidden pb-2 align-bottom"
+            >
+              <motion.span
+                className="inline-block"
+                initial={{ y: "110%", rotate: 5 }}
+                animate={{ y: 0, rotate: 0 }}
+                transition={{
+                  delay: 0.15 + i * 0.09,
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {word}
+                {/* Add non-breaking space if not last word */}
+                {i < words.length - 1 ? "\u00A0" : ""}
+              </motion.span>
+            </span>
+          ))}
+        </h1>
+        <motion.p
+          className="mt-7 max-w-lg text-lg text-ink/85 md:text-xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+        >
+          {intro}
+        </motion.p>
+        <motion.div
+          className="mt-9 flex flex-wrap h-fit gap-4"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.15, duration: 0.7 }}
+        >
+          <div className="flex gap-4">
             <Button href="/contact" size="sm">
               Book a visit
             </Button>
@@ -39,7 +72,7 @@ export default function Hero({
               See our programs
             </Button>
           </div>
-        </div>
+        </motion.div>
         <div className="animate-morph relative mx-auto aspect-4/5 w-full max-w-md overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
           <CdnImage
             {...image}
