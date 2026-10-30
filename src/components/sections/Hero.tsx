@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import CdnImage from "@/components/ui/CdnImage";
 import { motion } from "motion/react";
 import type { CdnImageData } from "@/types/images";
+import PaintBlob from "../ui/PaintBlob";
 
 const HEADLINE = "Where every child paints their own day.";
 
@@ -26,6 +27,12 @@ export default function Hero({
   const words = headline.split(" ");
   return (
     <section className="relative isolate overflow-hidden">
+      {/* Background coloured canvas */}
+      <div
+        className="hero-fallback absolute inset-0 -z-20"
+        aria-hidden="true"
+      />
+
       <div className="mx-auto grid max-w-6xl items-top gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
         <h1 className="text-5xl font-medium lg:text-6xl">
           {words.map((word, i) => (
@@ -73,14 +80,51 @@ export default function Hero({
             </Button>
           </div>
         </motion.div>
-        <div className="animate-morph relative mx-auto aspect-4/5 w-full max-w-md overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
+        {/* <div className="animate-morph relative mx-auto aspect-4/5 w-full max-w-md overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
           <CdnImage
             {...image}
             priority
             sizes="(min-width: 768px) 28rem, 90vw"
             fallbackClassName="bg-mint/50"
           />
-        </div>
+        </div> */}
+        <motion.div
+          className="relative mx-auto w-full max-w-md"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div data-speed="0.5" className="absolute -left-10 -top-10 w-40">
+            <PaintBlob
+              seed={3}
+              className="animate-drift text-sun mix-blend-multiply"
+            />
+          </div>
+          <div
+            data-speed="0.9"
+            data-rotate="25"
+            className="absolute -bottom-8 -right-8 w-44"
+          >
+            <PaintBlob
+              seed={9}
+              className="animate-drift text-tomato mix-blend-multiply [animation-delay:-3s]"
+            />
+          </div>
+          <div data-speed="0.3" className="absolute -right-4 top-6 w-20">
+            <PaintBlob
+              seed={14}
+              className="animate-drift text-sky mix-blend-multiply [animation-delay:-6s]"
+            />
+          </div>
+          <div className="animate-morph relative aspect-[4/5] overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
+            <CdnImage
+              {...image}
+              priority
+              sizes="(min-width: 768px) 28rem, 90vw"
+              fallbackClassName="bg-mint/50"
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
