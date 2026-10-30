@@ -3,6 +3,6 @@
 import { imageGallery } from "@/data/image-gallery";
 import type { GallerySlide } from "@/types/images";
 
-export async function getBusinessValues(): Promise<GallerySlide[]> {
+export async function getImageGallery(): Promise<GallerySlide[]> {
   return imageGallery;
 }
