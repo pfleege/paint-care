@@ -2,13 +2,19 @@
 
 "use client";
 
+import dynamic from "next/dynamic";
 import Button from "../ui/Button";
 import CdnImage from "@/components/ui/CdnImage";
 import { motion } from "motion/react";
 import type { CdnImageData } from "@/types/images";
 import PaintBlob from "../ui/PaintBlob";
 import ScrollParallax from "../effects/ScrollParallax";
-import ShaderBackground from "../effects/ShaderBackground";
+
+// Load WebGL shader only after first paint so it never blocks the page.
+const ShaderBackground = dynamic(
+  () => import("@/components/effects/ShaderBackground"),
+  { ssr: false },
+);
 
 const HEADLINE = "Where every child paints their own day.";
 
