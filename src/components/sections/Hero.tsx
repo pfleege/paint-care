@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import type { CdnImageData } from "@/types/images";
 import PaintBlob from "../ui/PaintBlob";
 import ScrollParallax from "../effects/ScrollParallax";
+import ShaderBackground from "../effects/ShaderBackground";
 
 const HEADLINE = "Where every child paints their own day.";
 
@@ -19,7 +20,7 @@ type Props = {
 
 export default function Hero({
   headline = HEADLINE,
-  intro = "Paintbox is a small private kindergarten in Helsinki. We make space for play, big feelings and muddy boots, so every child feels seen.",
+  intro = "PaintCare is a small private daycare center in Helsinki. We make space for play, big feelings and muddy boots, so every child feels seen.",
   image = {
     path: `2022/12/17/12/59/fuzzy-7661669_1280.jpg`,
     alt: "Smiling children playing with colourful paint",
@@ -33,6 +34,7 @@ export default function Hero({
         className="hero-fallback absolute inset-0 -z-20"
         aria-hidden="true"
       />
+      <ShaderBackground />
 
       {/* <div className="mx-auto grid max-w-6xl items-top gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44"> */}
       <ScrollParallax className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
