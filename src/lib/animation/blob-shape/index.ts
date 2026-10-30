@@ -1,4 +1,4 @@
-// src/lib/blob-shape/index.ts
+// src/lib/animation/blob-shape/index.ts
 /**
  * Deterministic organic blob generator (same output on server and client,
  * so there are no hydration mismatches). Returns an SVG path in a 0–100 box.

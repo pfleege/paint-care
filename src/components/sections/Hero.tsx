@@ -7,6 +7,7 @@ import CdnImage from "@/components/ui/CdnImage";
 import { motion } from "motion/react";
 import type { CdnImageData } from "@/types/images";
 import PaintBlob from "../ui/PaintBlob";
+import ScrollParallax from "../effects/ScrollParallax";
 
 const HEADLINE = "Where every child paints their own day.";
 
@@ -33,61 +34,56 @@ export default function Hero({
         aria-hidden="true"
       />
 
-      <div className="mx-auto grid max-w-6xl items-top gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
-        <h1 className="text-5xl font-medium lg:text-6xl">
-          {words.map((word, i) => (
-            <span
-              key={i}
-              className="inline-block overflow-hidden pb-2 align-bottom"
-            >
-              <motion.span
-                className="inline-block"
-                initial={{ y: "110%", rotate: 5 }}
-                animate={{ y: 0, rotate: 0 }}
-                transition={{
-                  delay: 0.15 + i * 0.09,
-                  duration: 0.8,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+      {/* <div className="mx-auto grid max-w-6xl items-top gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44"> */}
+      <ScrollParallax className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
+        <div>
+          <h1 className="text-5xl font-medium sm:text-6xl lg:text-7xl">
+            {words.map((word, i) => (
+              <span
+                key={i}
+                className="inline-block overflow-hidden pb-2 align-bottom"
               >
-                {word}
-                {/* Add non-breaking space if not last word */}
-                {i < words.length - 1 ? "\u00A0" : ""}
-              </motion.span>
-            </span>
-          ))}
-        </h1>
-        <motion.p
-          className="mt-7 max-w-lg text-lg text-ink/85 md:text-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          {intro}
-        </motion.p>
-        <motion.div
-          className="mt-9 flex flex-wrap h-fit gap-4"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.15, duration: 0.7 }}
-        >
-          <div className="flex gap-4">
-            <Button href="/contact" size="sm">
-              Book a visit
-            </Button>
-            <Button href="/programs" size="sm" tone="chalk">
-              See our programs
-            </Button>
-          </div>
-        </motion.div>
-        {/* <div className="animate-morph relative mx-auto aspect-4/5 w-full max-w-md overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
-          <CdnImage
-            {...image}
-            priority
-            sizes="(min-width: 768px) 28rem, 90vw"
-            fallbackClassName="bg-mint/50"
-          />
-        </div> */}
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: "110%", rotate: 5 }}
+                  animate={{ y: 0, rotate: 0 }}
+                  transition={{
+                    delay: 0.15 + i * 0.09,
+                    duration: 0.8,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  {word}
+                  {i < words.length - 1 ? "\u00A0" : ""}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.p
+            className="mt-7 max-w-lg text-lg text-ink/85 md:text-xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            {intro}
+          </motion.p>
+
+          <motion.div
+            className="mt-9 flex flex-wrap h-fit gap-4"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.15, duration: 0.7 }}
+          >
+            <div className="flex gap-4">
+              <Button href="/contact" size="sm">
+                Book a visit
+              </Button>
+              <Button href="/programs" size="sm" tone="chalk">
+                See our programs
+              </Button>
+            </div>
+          </motion.div>
+        </div>
         <motion.div
           className="relative mx-auto w-full max-w-md"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -101,12 +97,12 @@ export default function Hero({
             />
           </div>
           <div
-            data-speed="0.9"
-            data-rotate="25"
+            data-speed="-0.2"
+            data-rotate="60"
             className="absolute -bottom-8 -right-8 w-44"
           >
             <PaintBlob
-              seed={9}
+              seed={25}
               className="animate-drift text-tomato mix-blend-multiply [animation-delay:-3s]"
             />
           </div>
@@ -116,7 +112,7 @@ export default function Hero({
               className="animate-drift text-sky mix-blend-multiply [animation-delay:-6s]"
             />
           </div>
-          <div className="animate-morph relative aspect-[4/5] overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
+          <div className="animate-morph relative aspect-4/5 overflow-hidden bg-mint/30 shadow-[0_30px_60px_-30px_rgba(42,33,80,0.5)]">
             <CdnImage
               {...image}
               priority
@@ -125,7 +121,7 @@ export default function Hero({
             />
           </div>
         </motion.div>
-      </div>
+      </ScrollParallax>
     </section>
   );
 }

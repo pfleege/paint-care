@@ -1,7 +1,7 @@
 // src/components/ui/PaintBlob.tsx
 
 import type { SVGProps } from "react";
-import { blobShape } from "@/lib/blob-shape";
+import { blobShape } from "@/lib/animation/blob-shape";
 import { cnj } from "@/utils/class-name-joiner";
 
 type BlobProps = SVGProps<SVGSVGElement> & { seed?: number };
