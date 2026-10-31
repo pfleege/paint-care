@@ -4,7 +4,22 @@
 
 import { useEffect, useRef } from "react";
 
-export default function PhysicsCanvas() {
+type Meta = { color: string; label?: string; shape: "circle" | "block" };
+
+const PALETTE = [
+  "#FF6B57",
+  "#FFC93C",
+  "#35C79A",
+  "#4BA3FF",
+  "#9A6BFF",
+  "#FF8DBA",
+];
+
+type Props = { letters?: string[] };
+
+export default function PhysicsCanvas({
+  letters = ["P", "L", "A", "Y"],
+}: Props) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -21,7 +36,7 @@ export default function PhysicsCanvas() {
       const Matter = (await import("matter-js")).default;
       //   Check if user has left the page
       if (disposed) return;
-      const { Engine, Bodies, Composite } = Matter;
+      const { Engine, Bodies, Body, Composite } = Matter;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
@@ -43,43 +58,102 @@ export default function PhysicsCanvas() {
         // Bodies.rectangle(w / 2, h + T / 2, w * 2, h, { isStatic: true }), // Adds a platform above the bottom
       ]);
 
-      const timer = window.setInterval(() => {
-        const r = 22 + Math.random() * 26;
-        Composite.add(
-          engine.world,
-          Bodies.circle(w * (0.15 + Math.random() * 0.7), -60, r, {
-            restitution: 0.65,
-          }),
-        );
-      }, 220); // Adds new circle every 220ms
+      const meta = new Map<number, Meta>();
+      let spawned = 0;
+      const total = 20; // Total number of elements being dropped
+      const spawn = () => {
+        const i = spawned++;
+        const x = w * (0.15 + Math.random() * 0.7);
+        const color = PALETTE[i % PALETTE.length];
+        let body: Matter.Body;
+        if (i < letters.length) {
+          const s = 78;
+          body = Bodies.rectangle(x, -60, s, s, {
+            chamfer: { radius: 18 },
+            restitution: 0.5,
+            friction: 0.3,
+          });
+          meta.set(body.id, { color, label: letters[i], shape: "block" });
+        } else {
+          const r = 22 + Math.random() * 26;
+          body = Bodies.circle(x, -60, r, { restitution: 0.65, friction: 0.1 });
+          meta.set(body.id, { color, shape: "circle" });
+        }
+        Body.setAngle(body, Math.random() * Math.PI);
+        Composite.add(engine.world, body);
+      };
+      const spawnTimer = window.setInterval(() => {
+        spawn();
+        if (spawned >= total) window.clearInterval(spawnTimer);
+      }, 220);
+
+      //   const timer = window.setInterval(() => {
+      //     const r = 22 + Math.random() * 26;
+      //     Composite.add(
+      //       engine.world,
+      //       Bodies.circle(w * (0.15 + Math.random() * 0.7), -60, r, {
+      //         restitution: 0.65,
+      //       }),
+      //     );
+      //   }, 220); // Adds new circle every 220ms
 
       let raf = 0;
       const tick = () => {
         raf = requestAnimationFrame(tick);
         Engine.update(engine, 1000 / 60); // Update frequency
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "rgba(25,215,12,0.8)"; // HEX, rgb or named
-        ctx.shadowColor = "gray";
-        ctx.shadowOffsetY = 1;
-        ctx.shadowOffsetX = 2;
         for (const body of Composite.allBodies(engine.world)) {
-          if (body.isStatic) continue;
+          const info = meta.get(body.id);
+          if (!info) continue;
+          ctx.save();
+          ctx.translate(body.position.x, body.position.y);
+          ctx.rotate(body.angle);
+          ctx.fillStyle = info.color;
           ctx.beginPath();
-          ctx.arc(
-            body.position.x,
-            body.position.y,
-            body.circleRadius ?? 30,
-            0,
-            Math.PI * 2,
-          );
+          if (info.shape === "circle") {
+            ctx.arc(0, 0, body.circleRadius ?? 30, 0, Math.PI * 2);
+          } else {
+            const s = (body.bounds.max.x - body.bounds.min.x) / 1.2;
+            ctx.roundRect(-s / 2, -s / 2, s, s, s * 0.28);
+          }
           ctx.fill();
+          if (info.label) {
+            ctx.fillStyle = "#2A2150";
+            ctx.font = '600 44px "Fredoka Variable", ui-rounded, sans-serif';
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(info.label, 0, 3);
+          }
+          ctx.restore();
         }
       };
       tick();
+      //   const tick = () => {
+      //     raf = requestAnimationFrame(tick);
+      //     Engine.update(engine, 1000 / 60); // Update frequency
+      //     ctx.clearRect(0, 0, w, h);
+      //     ctx.fillStyle = "rgba(25,215,12,0.8)"; // HEX, rgb or named
+      //     ctx.shadowColor = "gray";
+      //     ctx.shadowOffsetY = 1;
+      //     ctx.shadowOffsetX = 2;
+      //     for (const body of Composite.allBodies(engine.world)) {
+      //       if (body.isStatic) continue;
+      //       ctx.beginPath();
+      //       ctx.arc(
+      //         body.position.x,
+      //         body.position.y,
+      //         body.circleRadius ?? 30,
+      //         0,
+      //         Math.PI * 2,
+      //       );
+      //       ctx.fill();
+      //     }
+      //   };
+      //   tick();
 
       cleanup = () => {
         cancelAnimationFrame(raf);
-        window.clearInterval(timer);
+        window.clearInterval(spawnTimer);
         Composite.clear(engine.world, false);
         Engine.clear(engine);
       };
