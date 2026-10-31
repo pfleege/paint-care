@@ -69,6 +69,7 @@ export default function ImageSlider({
             )}
           />
           <AnimatePresence initial={false} custom={dir} mode="popLayout">
+            {/* Drag parameters for mobile touch devices -> swipe */}
             <motion.div
               key={slide.id}
               custom={dir}
@@ -77,6 +78,15 @@ export default function ImageSlider({
               animate="center"
               exit="exit"
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.25}
+              onDrag={(_, info) => {
+                if (info.offset.x < -70) slideSelector(1);
+                else if (info.offset.x > 70) slideSelector(-1);
+              }}
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${count}`}
               className="animate-morph absolute inset-0 overflow-hidden bg-chalk"
             >
               <CdnImage
