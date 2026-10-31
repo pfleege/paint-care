@@ -8,16 +8,34 @@ import CdnImage from "./CdnImage";
 import { colorAccentBg, colorAccentText } from "@/lib/color-accents";
 import { cnj } from "@/utils/class-name-joiner";
 import PaintBlob from "./PaintBlob";
+import { AnimatePresence, motion } from "motion/react";
+
+const animationVariants = {
+  enter: (dir: number) => ({
+    x: dir >= 0 ? 90 : -90,
+    opacity: 0,
+    rotate: dir >= 0 ? 3 : -3,
+  }),
+  center: { x: 0, opacity: 1, rotate: 0 },
+  exit: (dir: number) => ({
+    x: dir >= 0 ? -90 : 90,
+    opacity: 0,
+    rotate: dir >= 0 ? -3 : 3,
+  }),
+};
 
 export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
-  const [index, setIndex] = useState(0);
+  const [[index, dir], setIndex] = useState<[number, number]>([0, 0]);
   const count = slides.length;
   const slide = slides[index];
 
-  //   const slideSelector = (delta: number) =>
-  //     setIndex((i) => (i + delta + count) % count);
+  //   Slide selector arrows
+  const slideSelector = (delta: number) =>
+    setIndex(([i]) => [(i + delta + count) % count, delta]);
 
-  const goTo = (target: number) => setIndex(index + target);
+  //   Slide indicator
+  const goTo = (target: number) =>
+    setIndex(([i]) => [target, target >= i ? 1 : -1]);
 
   return (
     <div className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
@@ -29,16 +47,27 @@ export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
             colorAccentText[slide.colorAccent],
           )}
         />
-        <div className="animate-morph absolute inset-0 overflow-hidden bg-chalk">
-          <CdnImage
-            {...slide.image}
-            sizes="(min-width: 768px) 36rem, 90vw"
-            fallbackClassName={cnj(
-              colorAccentBg[slide.colorAccent],
-              "opacity-60",
-            )}
-          />
-        </div>
+        <AnimatePresence initial={false} custom={dir} mode="popLayout">
+          <motion.div
+            key={slide.id}
+            custom={dir}
+            variants={animationVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="animate-morph absolute inset-0 overflow-hidden bg-chalk"
+          >
+            <CdnImage
+              {...slide.image}
+              sizes="(min-width: 768px) 36rem, 90vw"
+              fallbackClassName={cnj(
+                colorAccentBg[slide.colorAccent],
+                "opacity-60",
+              )}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       <div>
@@ -55,7 +84,7 @@ export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
         <div className="mt-10 flex items-center gap-5">
           <button
             type="button"
-            onClick={() => goTo(-1)}
+            onClick={() => slideSelector(-1)}
             aria-label="Previous slide"
             className="grid size-12 place-items-center rounded-full bg-ink text-chalk transition-transform hover:-translate-x-1"
           >
@@ -74,7 +103,7 @@ export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
           </button>
           <button
             type="button"
-            onClick={() => goTo(1)}
+            onClick={() => slideSelector(1)}
             aria-label="Next slide"
             className="grid size-12 place-items-center rounded-full bg-ink text-chalk transition-transform hover:translate-x-1"
           >
