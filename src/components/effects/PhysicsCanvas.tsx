@@ -36,17 +36,24 @@ export default function PhysicsCanvas({
       const Matter = (await import("matter-js")).default;
       //   Check if user has left the page
       if (disposed) return;
-      const { Engine, Bodies, Body, Composite } = Matter;
+      const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } =
+        Matter;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       //   Width + height definition of elements
-      const w = wrapEl.clientWidth;
-      const h = wrapEl.clientHeight; // 1/2 -> prevents elongation when 2x canvas height
+      //   const w = wrapEl.clientWidth;
+      //   const h = wrapEl.clientHeight; // 1/2 -> prevents elongation when 2x canvas height
 
-      //   Width + height of canvas
-      canvas.width = w;
-      canvas.height = h; // -> canvas 2xh = elements drop 1/2 way down
+      //   //   Width + height of canvas
+      //   canvas.width = w;
+      //   canvas.height = h; // -> canvas 2xh = elements drop 1/2 way down
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = wrapEl.clientWidth;
+      const h = wrapEl.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
 
       //   Create a physics world with gravity
       const engine = Engine.create();
@@ -87,6 +94,24 @@ export default function PhysicsCanvas({
         if (spawned >= total) window.clearInterval(spawnTimer);
       }, 220);
 
+      // Mouse dragging (desktop). Touch/wheel listeners are removed so the
+      // page can still scroll on phones and trackpads.
+      const mouse = Mouse.create(canvas);
+      mouse.pixelRatio = dpr;
+      const m = mouse as unknown as Record<string, EventListener>;
+      const el = mouse.element;
+      el.removeEventListener("wheel", m.mousewheel);
+      el.removeEventListener("mousewheel", m.mousewheel);
+      el.removeEventListener("DOMMouseScroll", m.mousewheel);
+      el.removeEventListener("touchstart", m.mousedown);
+      el.removeEventListener("touchmove", m.mousemove);
+      el.removeEventListener("touchend", m.mouseup);
+      const drag = MouseConstraint.create(engine, {
+        mouse,
+        constraint: { stiffness: 0.2, render: { visible: false } },
+      });
+      Composite.add(engine.world, drag);
+
       //   const timer = window.setInterval(() => {
       //     const r = 22 + Math.random() * 26;
       //     Composite.add(
@@ -101,6 +126,7 @@ export default function PhysicsCanvas({
       const tick = () => {
         raf = requestAnimationFrame(tick);
         Engine.update(engine, 1000 / 60); // Update frequency
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, w, h);
         for (const body of Composite.allBodies(engine.world)) {
           const info = meta.get(body.id);
@@ -166,7 +192,10 @@ export default function PhysicsCanvas({
   }, []);
 
   return (
-    <div ref={wrap} className="relative h-104 w-full overflow-hidden bg-ink">
+    <div
+      ref={wrap}
+      className="relative h-104 w-full overflow-hidden bg-ink touch-pan-y"
+    >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
     </div>
   );
