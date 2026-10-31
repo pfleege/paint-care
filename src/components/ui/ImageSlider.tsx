@@ -2,13 +2,14 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import type { GallerySlide } from "@/types/images";
 import CdnImage from "./CdnImage";
 import { colorAccentBg, colorAccentText } from "@/lib/color-accents";
 import { cnj } from "@/utils/class-name-joiner";
 import PaintBlob from "./PaintBlob";
 import { AnimatePresence, motion } from "motion/react";
+import { div } from "motion/react-client";
 
 const animationVariants = {
   enter: (dir: number) => ({
@@ -24,7 +25,13 @@ const animationVariants = {
   }),
 };
 
-export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
+export default function ImageSlider({
+  slides,
+  className,
+}: {
+  slides: GallerySlide[];
+  className?: string;
+}) {
   const [[index, dir], setIndex] = useState<[number, number]>([0, 0]);
   const count = slides.length;
   const slide = slides[index];
@@ -37,107 +44,126 @@ export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
   const goTo = (target: number) =>
     setIndex(([i]) => [target, target >= i ? 1 : -1]);
 
-  return (
-    <div className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
-      <div className="relative mx-auto aspect-square w-full max-w-xl">
-        <PaintBlob
-          seed={index * 3 + 4}
-          className={cnj(
-            "absolute -inset-6 h-[calc(100%+3rem)] w-[calc(100%+3rem)] transition-colors duration-700",
-            colorAccentText[slide.colorAccent],
-          )}
-        />
-        <AnimatePresence initial={false} custom={dir} mode="popLayout">
-          <motion.div
-            key={slide.id}
-            custom={dir}
-            variants={animationVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="animate-morph absolute inset-0 overflow-hidden bg-chalk"
-          >
-            <CdnImage
-              {...slide.image}
-              sizes="(min-width: 768px) 36rem, 90vw"
-              fallbackClassName={cnj(
-                colorAccentBg[slide.colorAccent],
-                "opacity-60",
-              )}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+  //   Keyboard accessibility
+  const onKeyDown = (evt: KeyboardEvent) => {
+    if (evt.key === "ArrowRight") slideSelector(1);
+    if (evt.key === "ArrowLeft") slideSelector(-1);
+  };
 
-      <div aria-live="polite">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h3 className="text-4xl font-medium md:text-5xl">{slide.title}</h3>
-            <p className="mt-4 max-w-sm text-lg text-ink/80">{slide.caption}</p>
-          </motion.div>
-        </AnimatePresence>
-        <div className="mt-10 flex items-center gap-5">
-          <button
-            type="button"
-            onClick={() => slideSelector(-1)}
-            aria-label="Previous slide"
-            className="grid size-12 place-items-center rounded-full bg-ink text-chalk transition-transform hover:-translate-x-1"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="size-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+  return (
+    <div
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Life at PaintCare"
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      className={cnj("relative", className)}
+    >
+      <div className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative mx-auto aspect-square w-full max-w-xl">
+          <PaintBlob
+            seed={index * 3 + 4}
+            className={cnj(
+              "absolute -inset-6 h-[calc(100%+3rem)] w-[calc(100%+3rem)] transition-colors duration-700",
+              colorAccentText[slide.colorAccent],
+            )}
+          />
+          <AnimatePresence initial={false} custom={dir} mode="popLayout">
+            <motion.div
+              key={slide.id}
+              custom={dir}
+              variants={animationVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="animate-morph absolute inset-0 overflow-hidden bg-chalk"
             >
-              <path d="M15 5l-7 7 7 7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={() => slideSelector(1)}
-            aria-label="Next slide"
-            className="grid size-12 place-items-center rounded-full bg-ink text-chalk transition-transform hover:translate-x-1"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="size-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          <div className="ml-2 flex items-center gap-2">
-            {slides.map((s, i) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Show slide ${i + 1}: ${s.title}`}
-                aria-current={i === index}
-                className={cnj(
-                  "h-3 rounded-full transition-all duration-300",
-                  i === index
-                    ? cnj("w-8", colorAccentBg[s.colorAccent])
-                    : "w-3 bg-ink/20 hover:bg-ink/40",
+              <CdnImage
+                {...slide.image}
+                sizes="(min-width: 768px) 36rem, 90vw"
+                fallbackClassName={cnj(
+                  colorAccentBg[slide.colorAccent],
+                  "opacity-60",
                 )}
               />
-            ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div aria-live="polite">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 className="text-4xl font-medium md:text-5xl">
+                {slide.title}
+              </h3>
+              <p className="mt-4 max-w-sm text-lg text-ink/80">
+                {slide.caption}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+          <div className="mt-10 flex items-center gap-5">
+            <button
+              type="button"
+              onClick={() => slideSelector(-1)}
+              aria-label="Previous slide"
+              className="grid size-12 place-items-center rounded-full bg-ink text-chalk transition-transform hover:-translate-x-1"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M15 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => slideSelector(1)}
+              aria-label="Next slide"
+              className="grid size-12 place-items-center rounded-full bg-ink text-chalk transition-transform hover:translate-x-1"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <div className="ml-2 flex items-center gap-2">
+              {slides.map((s, i) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-label={`Show slide ${i + 1}: ${s.title}`}
+                  aria-current={i === index}
+                  className={cnj(
+                    "h-3 rounded-full transition-all duration-300",
+                    i === index
+                      ? cnj("w-8", colorAccentBg[s.colorAccent])
+                      : "w-3 bg-ink/20 hover:bg-ink/40",
+                  )}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
