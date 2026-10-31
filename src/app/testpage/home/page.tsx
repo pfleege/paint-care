@@ -6,6 +6,7 @@ import Hero from "@/components/sections/Hero";
 import GallerySection from "@/components/sections/GallerySection";
 import { getBusinessValues } from "@/db/queries/business-values";
 import { getImageGallery } from "@/db/queries/image-gallery";
+import PhysicsCanvas from "@/components/effects/PhysicsCanvas";
 
 export default async function TestHomePage() {
   // const values = await getBusinessValues();
@@ -16,6 +17,7 @@ export default async function TestHomePage() {
   return (
     <>
       <Hero />
+      <PhysicsCanvas />
       <BusinessValuesSection values={values} />
       <GallerySection slides={gallery} />
       <CallToAction />
