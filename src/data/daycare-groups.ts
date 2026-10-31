@@ -18,7 +18,7 @@ export const daycareGroups: DaycareGroup[] = [
     ],
     accent: "mint",
     image: {
-      path: `${PLACEHOLDER}/little-sprouts.jpg`,
+      path: `2025/10/21/18/31/pink-monster-9908120_1280.png`,
       alt: "Toddlers playing with soft sensory toys",
     },
   },
@@ -36,7 +36,7 @@ export const daycareGroups: DaycareGroup[] = [
     ],
     accent: "sky",
     image: {
-      path: `${PLACEHOLDER}/puddle-jumpers.jpg`,
+      path: `2024/01/14/09/58/ai-generated-8507502_1280.jpg`,
       alt: "Children in rain boots jumping in puddles",
     },
   },
@@ -54,7 +54,7 @@ export const daycareGroups: DaycareGroup[] = [
     ],
     accent: "tomato",
     image: {
-      path: `${PLACEHOLDER}/colour-explorers.jpg`,
+      path: `2025/01/22/20/17/monster-9353046_1280.jpg`,
       alt: "Children painting together at a large table",
     },
   },
@@ -72,7 +72,7 @@ export const daycareGroups: DaycareGroup[] = [
     ],
     accent: "grape",
     image: {
-      path: `${PLACEHOLDER}/school-pioneers.jpg`,
+      path: `2025/04/26/13/05/monster-9561235_1280.jpg`,
       alt: "Older children reading a picture book together",
     },
   },
