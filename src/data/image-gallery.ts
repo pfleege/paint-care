@@ -11,7 +11,7 @@ export const imageGallery: GallerySlide[] = [
       "Big paper, small hands and no wrong colours. We start our mornings with some painting in a relaxed setting where we listen to soft music and let the children be creative.",
     colorAccent: "tomato",
     image: {
-      path: `2022/12/17/12/59/fuzzy-7661669_1280.jpg`,
+      path: `2025/10/24/13/39/halloween-9914252_1280.png`,
       alt: "Cute monster in pyjamas",
     },
   },
@@ -22,7 +22,7 @@ export const imageGallery: GallerySlide[] = [
       "We spend a lot of time outside exploring nature, which is why we focus on proper clothing that suits the season and weather conditions.",
     colorAccent: "sky",
     image: {
-      path: `2025/07/07/10/23/ai-generated-9700784_1280.jpg`,
+      path: `2023/01/12/21/11/funny-7714877_1280.jpg`,
       alt: "Child splashing in a puddle",
     },
   },
@@ -33,7 +33,7 @@ export const imageGallery: GallerySlide[] = [
       "The children get to do some own gardening in our back yard, because tomatoes and carrots taste so much better when you planted them yourself.",
     colorAccent: "mint",
     image: {
-      path: `2023/01/19/19/41/ai-generated-7730087_1280.jpg`,
+      path: `2025/07/24/15/43/creature-9733109_1280.jpg`,
       alt: "Children picking vegetables in a garden",
     },
   },

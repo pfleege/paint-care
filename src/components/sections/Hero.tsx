@@ -40,7 +40,7 @@ export default function Hero({
         className="hero-fallback absolute inset-0 -z-20"
         aria-hidden="true"
       />
-      <ShaderBackground />
+      <ShaderBackground className="-z-10 opacity-70" />
 
       {/* <div className="mx-auto grid max-w-6xl items-top gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44"> */}
       <ScrollParallax className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-36 md:grid-cols-[1.15fr_0.85fr] md:pb-32 md:pt-44">
