@@ -70,17 +70,19 @@ export default function ImageSlider({ slides }: { slides: GallerySlide[] }) {
         </AnimatePresence>
       </div>
 
-      <div>
-        <h3 className="text-4xl font-medium md:text-5xl">{slide.title}</h3>
-        <p className="mt-4 max-w-sm text-lg text-ink/80">{slide.caption}</p>
-        {/* <div className="mt-10 flex gap-4">
-          <button type="button" onClick={() => slideSelector(-1)}>
-            Previous
-          </button>
-          <button type="button" onClick={() => slideSelector(1)}>
-            Next
-          </button>
-        </div> */}
+      <div aria-live="polite">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={slide.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className="text-4xl font-medium md:text-5xl">{slide.title}</h3>
+            <p className="mt-4 max-w-sm text-lg text-ink/80">{slide.caption}</p>
+          </motion.div>
+        </AnimatePresence>
         <div className="mt-10 flex items-center gap-5">
           <button
             type="button"
