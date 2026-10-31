@@ -12,22 +12,27 @@ export default function ProgramList({
   programs: DaycareGroup[];
 }) {
   return (
-    <section className="mx-auto max-w-6xl space-y-24 px-6 pb-24">
+    <section className="mx-auto max-w-6xl space-y-24 px-6 pb-24 md:space-y-32">
       {programs.map((program, i) => (
         <article
           key={program.id}
-          className="grid items-center gap-10 md:grid-cols-2 md:gap-16"
+          className="group grid items-center gap-10 md:grid-cols-2 md:gap-16"
         >
-          <div className="relative mx-auto aspect-5/4 w-full max-w-lg">
+          <div
+            className={cnj(
+              "relative mx-auto aspect-5/4 w-full max-w-lg",
+              i % 2 === 1 && "md:order-2",
+            )}
+          >
             <PaintBlob
               seed={i * 5 + 1}
               className={cnj(
-                "absolute -inset-5 h-[calc(100%+2.5rem)] w-[calc(100%+2.5rem)]",
+                "absolute -inset-5 h-[calc(100%+2.5rem)] w-[calc(100%+2.5rem)] transition-transform duration-700 ease-out group-hover:-rotate-6 group-hover:scale-105",
                 colorAccentText[program.accent],
               )}
               preserveAspectRatio="none"
             />
-            <div className="animate-morph absolute inset-0 overflow-hidden bg-chalk">
+            <div className="animate-morph absolute inset-0 overflow-hidden bg-chalk transition-transform duration-700 ease-out group-hover:scale-[0.97]">
               <CdnImage
                 {...program.image}
                 sizes="(min-width: 768px) 32rem, 90vw"
