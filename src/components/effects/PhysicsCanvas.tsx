@@ -198,7 +198,10 @@ export default function PhysicsCanvas({
   return (
     <div
       ref={wrap}
-      className={cnj("relative h-104 w-full overflow-hidden", className)}
+      className={cnj(
+        "relative h-104 w-full overflow-hidden content-center",
+        className,
+      )}
     >
       <canvas
         ref={canvasRef}

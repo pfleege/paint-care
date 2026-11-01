@@ -22,7 +22,7 @@ export default function SectionHeading({
   return (
     <div
       className={cnj(
-        "max-w-2xl",
+        "max-w-fit",
         align === "center" && "mx-auto text-center",
         className,
       )}
