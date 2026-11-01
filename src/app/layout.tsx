@@ -7,6 +7,7 @@ import "./globals.css";
 import { site } from "@/data/site";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Providers from "@/components/layout/Providers";
 
 export const metadata: Metadata = {
   title: {
@@ -28,9 +29,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <a
+          href="#main"
+          className="fixed left-4 top-4 z-70 -translate-y-24 rounded-full bg-ink px-5 py-2 text-chalk focus:translate-y-0"
+        >
+          Skip to content
+        </a>
+        <Providers>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
