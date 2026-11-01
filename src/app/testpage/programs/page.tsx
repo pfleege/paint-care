@@ -6,6 +6,7 @@ import { getDaycareGroups } from "@/db/queries/daycare-groups";
 import { getDaylyRythm } from "@/db/queries/daily-rythm";
 import ProgramList from "@/components/sections/ProgramList";
 import DailyRhythm from "@/components/sections/DailyRhythm";
+import CallToAction from "@/components/sections/CallToAction";
 
 export default async function ProgramsPage() {
   const programs = await getDaycareGroups();
@@ -18,6 +19,11 @@ export default async function ProgramsPage() {
       </PageIntro>
       <ProgramList programs={programs} />
       <DailyRhythm steps={rhythm} />
+      <CallToAction
+        title="Found your group?"
+        text="Tell us about your child and we will find the right place for them."
+        label="Get in touch"
+      />
     </>
   );
 }
