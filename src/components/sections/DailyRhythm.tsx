@@ -2,6 +2,8 @@
 
 import type { DailyRythm } from "@/types/daily-rythm";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { colorAccentBg, colorAccentText } from "@/lib/color-accents";
+import { cnj } from "@/utils/class-name-joiner";
 
 export default function DailyRhythm({ steps }: { steps: DailyRythm[] }) {
   return (
@@ -10,11 +12,24 @@ export default function DailyRhythm({ steps }: { steps: DailyRythm[] }) {
         A steady rhythm gives children the security to be adventurous.
       </SectionHeading>
 
-      <ol className="mt-14 space-y-10">
+      <ol className="relative mt-14 space-y-10 pl-10 md:ml-34 md:pl-14">
+        <span
+          aria-hidden="true"
+          className="absolute left-3 top-2 h-[calc(100%-1rem)] w-1 rounded-full bg-ink/10 md:left-5"
+        />
         {steps.map((step) => (
-          <li key={step.id}>
-            <time className="font-display text-2xl text-ink">{step.time}</time>
-            <h3 className="mt-1 text-2xl font-medium">{step.title}</h3>
+          <li key={step.id} className="relative">
+            <span
+              aria-hidden="true"
+              className={cnj(
+                "absolute left-[-2.35rem] top-1.5 size-5 rounded-full ring-4 ring-chalk md:left-[-3.35rem]",
+                colorAccentBg[step.colorAccent],
+              )}
+            />
+            <time className="font-display text-2xl text-ink md:absolute md:-left-38 md:top-0 md:w-24 md:text-right">
+              {step.time}
+            </time>
+            <h3 className="mt-1 text-2xl font-medium md:mt-0">{step.title}</h3>
             <p className="mt-1 max-w-md text-ink/80">{step.text}</p>
           </li>
         ))}
