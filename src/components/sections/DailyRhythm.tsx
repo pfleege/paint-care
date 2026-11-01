@@ -1,21 +1,40 @@
 // src/components/sections/DailyRhythm.tsx
 
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useSpring } from "motion/react";
 import type { DailyRythm } from "@/types/daily-rythm";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { colorAccentBg, colorAccentText } from "@/lib/color-accents";
+import { colorAccentBg } from "@/lib/color-accents";
 import { cnj } from "@/utils/class-name-joiner";
 
 export default function DailyRhythm({ steps }: { steps: DailyRythm[] }) {
+  const ref = useRef<HTMLOListElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 70%", "end 65%"],
+  });
+  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 24 });
+
   return (
     <section className="mx-auto max-w-6xl px-6 pb-28">
       <SectionHeading title="A day at PaintCare">
         A steady rhythm gives children the security to be adventurous.
       </SectionHeading>
 
-      <ol className="relative mt-14 space-y-10 pl-10 md:ml-34 md:pl-14">
+      <ol
+        ref={ref}
+        className="relative mt-14 space-y-10 pl-10 md:ml-34 md:pl-14"
+      >
         <span
           aria-hidden="true"
           className="absolute left-3 top-2 h-[calc(100%-1rem)] w-1 rounded-full bg-ink/10 md:left-5"
+        />
+        <motion.span
+          aria-hidden="true"
+          style={{ scaleY }}
+          className="absolute left-3 top-2 h-[calc(100%-1rem)] w-1 origin-top rounded-full bg-green-200 md:left-5"
         />
         {steps.map((step) => (
           <li key={step.id} className="relative">
