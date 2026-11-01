@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PaintCare Daycare Center (showcase)
 
-## Getting Started
+![](./public/paint-care-hero.png)
 
-First, run the development server:
+Next.js 16 · TypeScript · Tailwind CSS v4 · Webpack (no Turbopack)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A playful showcase project of a fictional daycare center.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    npm install
+    npm run dev      # next dev --webpack
+    npm run build    # next build --webpack
+    npm start
 
-## Learn More
+## Images (Pixabay CDN)
 
-To learn more about Next.js, take a look at the following resources:
+All image paths live in `src/data/*.ts` and still contain the `PIXABAY_PATH/...` placeholder,
+which renders a coloured fallback. Replace each with the path after `https://cdn.pixabay.com/photo/`, e.g.
+`2017/08/06/12/06/people-2591874_1280.jpg`. The Hero image is set in `src/components/sections/Hero.tsx`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/data/` typed static content;
+- `src/lib/` lib files such as color accent, paint blob and animation related files
+- `src/utils/` utility function (class name joiner function for adding page specific classes)
+- `src/db/queries` data access layers (swap for PostgreSQL here)
+- `src/types/` type definitions
+- `src/components/ui/` reusable primitives (Blob, Button, CdnImage, ImageSlider, PaintUnderline, SectionHeading)
+- `src/components/effects/` ShaderBackground (Paper Shaders), ScrollParallax (GSAP), PhysicsPlayground (Matter.js)
+- `src/components/layout/` Header, Footer, Providers, SmoothScroll (Lenis)
+- `src/components/sections/` page sections;
+- `src/app/` routes (/, /programs, /contact, /api/contact)
