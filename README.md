@@ -2,7 +2,7 @@
 
 ![](./public/paint-care-hero.png)
 
-**Stack:** Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · Webpack (no Turbopack)
+**Stack:** Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · Webpack (no Turbopack -> forced Webpack)
 
 A showcase website for a fictional private daycare center in Helsinki. It is a small, fully typed Next.js project built to practise component composition, animation and accessible UI, with a design built around paint blobs, rounded type and playful motion.
 
