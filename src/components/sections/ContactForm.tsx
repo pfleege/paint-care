@@ -17,22 +17,38 @@ export default function ContactForm({ ageGroups }: { ageGroups: string[] }) {
   async function onSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+    setStatus("sending");
+    setError("");
+
     try {
-      const res = await fetch("/api/contact", {
+      // Static site: there is no server to save the form. If NEXT_PUBLIC_INQUIRY_URL
+      // is set (e.g. a Formspree URL) the form is posted there; otherwise it is a demo
+      // and just pretends to send.
+      const url = process.env.NEXT_PUBLIC_INQUIRY_URL;
+      if (!url) {
+        await new Promise((r) => setTimeout(r, 600));
+        form.reset();
+        setStatus("sent");
+        return;
+      }
+      const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(data),
       });
-      const json = (await res.json()) as { ok: boolean; error?: string };
-      if (!json.ok) throw new Error(json.error ?? "Something went wrong.");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? "Something went wrong.");
+      }
+      form.reset();
       setStatus("sent");
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again.",
-      );
+      setError((err as Error).message);
       setStatus("error");
     }
   }
